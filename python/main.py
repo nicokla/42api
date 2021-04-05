@@ -98,8 +98,7 @@ myIterator = filter(lambda stud: stud[0] != '3', names)
 nonAnonymizedNames = list(myIterator)
 names = nonAnonymizedNames
 
-names = get_object('names.pkl')
-
+# names = get_object('names.pkl')
 # save_object(names, '../dataFrom42api/names.pkl')
 # matches = (x for x in names if x[0] == 'c' and x[1] == 'a')
 # list(matches)
@@ -107,50 +106,49 @@ names = get_object('names.pkl')
 # -----------------------------------------------
 # on recupere les donnees dans studs
 
-# studs = get_object('../dataFrom42api/old_studs.pkl')
-
-# studs = {}
-# compteur = 0 
-# for i in range(0,len(names)): 
-#   gotIt = False
-#   while not gotIt:
-#     objet = getUser(names[i])
-#     gotIt = (objet != -1)
-#     if not gotIt:
-#       compteur += 1
-#       print(i, 'fail', compteur)
-#       if compteur >= 10:
-#         time.sleep(float(1))
-#         prepareApiCalls()
-#         compteur = 0
-#         time.sleep(float(1))
-#   studs[names[i]] = objet['projects_users']
-#   print(i, 'ok', names[i])
+studs = {}
+compteur = 0 
+for i in range(0,len(names)): 
+  gotIt = False
+  while not gotIt:
+    objet = getUser(names[i])
+    gotIt = (objet != -1)
+    if not gotIt:
+      compteur += 1
+      print(i, 'fail', compteur)
+      if compteur >= 10:
+        time.sleep(float(1))
+        prepareApiCalls()
+        compteur = 0
+        time.sleep(float(1))
+  studs[names[i]] = objet['projects_users']
+  print(i, 'ok', names[i])
 
 # save_object(studs, '../dataFrom42api/studsOld.pkl')
+# studs = get_object('../dataFrom42api/old_studs.pkl')
 
 # ------------------------------------
 # on mets les donnees dans un format avec juste l'essentiel
 
 import arrow
 
-# studs2={}
-# for name, projects in studs.items():
-#   studs2[name] = {}
-#   for project in projects:
-#     if len(project['cursus_ids']) >= 1:
-#       if project['cursus_ids'][0] == 1: # 21
-#         nameProject = project['project']['name']
-#         wasValidated = project['validated?']
-#         text = project['marked_at']
-#         if text != None:
-#           date = arrow.get(text)
-#           dateAsFloat = float(date.format('X'))
-#           dateInDays = (dateAsFloat / (3600*24)) - 16028 # 18175
-#           studs2[name][nameProject] = {
-#             'wasValidated':wasValidated,
-#             'dateInDays':dateInDays
-#           }
+studs2={}
+for name, projects in studs.items():
+  studs2[name] = {}
+  for project in projects:
+    if len(project['cursus_ids']) >= 1:
+      if project['cursus_ids'][0] == 1: # 21
+        nameProject = project['project']['name']
+        wasValidated = project['validated?']
+        text = project['marked_at']
+        if text != None:
+          date = arrow.get(text)
+          dateAsFloat = float(date.format('X'))
+          dateInDays = (dateAsFloat / (3600*24)) - 16028 # 18175
+          studs2[name][nameProject] = {
+            'wasValidated':wasValidated,
+            'dateInDays':dateInDays
+          }
 
 #--------------------------
 # 2013: 18 novembre 2013
@@ -160,13 +158,13 @@ import arrow
 # 2017: 29 septembre 2017 ?
 # 2018: 24 septembre 2018 ?
 
-# debut=[388, 813, 1255, 1888, 2494, 3334]
-# decalage = [367, 738, 1043, 1411, 1771]
-# for i in range(len(debut) - 1):
-#   for j in range(debut[i], debut[i+1]):
-#     projects = studs2[names[j]]
-#     for nameProject, details in projects.items():
-#       details['dateInDays'] -= decalage[i]
+debut=[388, 813, 1255, 1888, 2494, 3334]
+decalage = [367, 738, 1043, 1411, 1771]
+for i in range(len(debut) - 1):
+  for j in range(debut[i], debut[i+1]):
+    projects = studs2[names[j]]
+    for nameProject, details in projects.items():
+      details['dateInDays'] -= decalage[i]
 
 # save_object(studs2, '../dataFrom42api/old_studs2_2.pkl')
 # studs2 = get_object('../dataFrom42api/old_studs2_2.pkl')
