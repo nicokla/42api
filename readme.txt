@@ -2,7 +2,7 @@
 1) first create 42 api application here:
 https://profile.intra.42.fr/oauth/applications
 
-2) then create .env file here and in ./node with the uid and secret
+2) then create the .env file here with the uid and secret (cf .env example)
 
 3) then do:
 
