@@ -1,0 +1,5 @@
+node/node_modules
+python/__pycache__
+__pycache__
+.env
+dataFrom42api
