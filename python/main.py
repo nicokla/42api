@@ -153,6 +153,13 @@ import arrow
 #           }
 
 #--------------------------
+# 2013: 18 novembre 2013
+# 2014: 20 novembre 2014 ?
+# 2015: 26 novembre 2015 ?
+# 2016: 26 septembre 2016 ?
+# 2017: 29 septembre 2017 ?
+# 2018: 24 septembre 2018 ?
+
 # debut=[388, 813, 1255, 1888, 2494, 3334]
 # decalage = [367, 738, 1043, 1411, 1771]
 # for i in range(len(debut) - 1):
